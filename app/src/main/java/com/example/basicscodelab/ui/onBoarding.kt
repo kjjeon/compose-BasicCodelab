@@ -33,7 +33,7 @@ fun OnboardingScreen(onContinueClicked: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Preview(showBackground = true, widthDp = 320)
 @Composable
 fun OnboardingPreview() {
     BasicsCodelabTheme {
