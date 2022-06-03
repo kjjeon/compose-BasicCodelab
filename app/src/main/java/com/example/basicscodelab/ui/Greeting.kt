@@ -3,6 +3,8 @@ package com.example.basicscodelab.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Surface
@@ -18,12 +20,12 @@ import androidx.compose.ui.unit.dp
 import com.example.basicscodelab.ui.theme.BasicsCodelabTheme
 
 @Composable
-fun Greetings(names: List<String> = listOf("android", "joel")) {
+fun Greetings(names: List<String> = List(1000) { "$it" }) {
     Surface(
         color = MaterialTheme.colors.background,
     ) {
-        Column(modifier = Modifier.padding(vertical = 4.dp)) {
-            for (name in names) {
+        LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
+            items(items = names) { name ->
                 Greeting(name)
             }
         }
