@@ -1,5 +1,8 @@
 package com.example.basicscodelab.ui
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -12,7 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,8 +37,14 @@ fun Greetings(names: List<String> = List(1000) { "$it" }) {
 
 @Composable
 fun Greeting(name: String) {
-    var expanded by remember { mutableStateOf(false) }
-    val padding = if (expanded) 44.dp else 0.dp
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val padding by animateDpAsState(
+        if (expanded) 44.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
 
     Surface(
         color = MaterialTheme.colors.primary,
@@ -45,7 +54,7 @@ fun Greeting(name: String) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(bottom = padding)
+                    .padding(bottom = padding.coerceAtLeast(0.dp))
             ) {
                 Text(
                     text = "Hello",
